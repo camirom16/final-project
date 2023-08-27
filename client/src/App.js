@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './styling/App.css';
-import Footer from "./components/Footer";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import HomePage from "./components/HomePage";
-import Login from "./components/Login";
 import NewAccount from "./components/NewAccount";
+import Login from "./components/Login";
+import Error from "./components/Error";
 
 const App = () => {
   return (
@@ -16,12 +17,10 @@ const App = () => {
         <div className="App-content">
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/about' element={<h1>About</h1>} />
-            <Route path='/how-it-works' element={<h1>How</h1>} />
-            <Route path='/ressources' element={<h1>Ressources</h1>} />
             <Route path='/new-account' element={<NewAccount />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile/:profileId' element={<h1>Profile</h1>} />
+            <Route path='*' element={<Error />} />
             
           </Routes>
         </div>
