@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HomePage from "./components/HomePage";
 import Login from "./components/Login";
+import NewAccount from "./components/NewAccount";
 
 const App = () => {
   return (
@@ -18,9 +19,10 @@ const App = () => {
             <Route path='/about' element={<h1>About</h1>} />
             <Route path='/how-it-works' element={<h1>How</h1>} />
             <Route path='/ressources' element={<h1>Ressources</h1>} />
-            <Route path='/new-account' element={<h1>New account</h1>} />
+            <Route path='/new-account' element={<NewAccount />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile/:profileId' element={<h1>Profile</h1>} />
+            
           </Routes>
         </div>
 
