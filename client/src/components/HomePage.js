@@ -10,7 +10,7 @@ const HomePage = () => {
                 <Slogan>
                     <Title>What concerns you about your health today?</Title>
                     <Text>Check your symptoms and find out what is the best thing to do.</Text>
-                    <Text>It's fast, free and anonymous.</Text>
+                    <Text>It's fast and free.</Text>
                 </Slogan>
             </Content>
         </Container>

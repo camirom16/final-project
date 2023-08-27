@@ -9,6 +9,11 @@ export const COLORS = {
     greenlink: "#244334",
 
     //Purple
-    purpletext: "#6e53a0"
+    purpletext: "#6e53a0",
 
+    //Soft purple
+    softpurple: "#9287b9",
+
+    //Dark Purple
+    darkpurple: "#432974"
 };
