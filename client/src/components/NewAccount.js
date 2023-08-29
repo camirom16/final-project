@@ -68,11 +68,10 @@ const NewAccount = () => {
                         alert(data.message)
                     }
                     else {
-                        navigate('/confirmation-account');
+                        navigate(`/account/${data.data._id}`);
                     }
                 })
                 .catch((error) => console.log("Fetch error:", error.message));
-        
     };
 
     return (
