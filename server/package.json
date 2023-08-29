@@ -16,5 +16,8 @@
   "scripts": {
     "start": "node index.js",
     "dev:server": "nodemon index.js"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

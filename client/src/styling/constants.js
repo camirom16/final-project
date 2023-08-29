@@ -1,19 +1,19 @@
 export const COLORS = {
     //Yellow
-    yellowbg: "#F2BE5C",
+    primary: "#F2BE5C",
+
+    //Soft purple
+    secondary: "#9287b9",
 
     //Red
-    redbutton: "#eb5154",
+    buttons: "#eb5154",
+
+    //Dark Purple
+    links: "#432974",
 
     //Green
     greenlink: "#244334",
 
     //Purple
     purpletext: "#6e53a0",
-
-    //Soft purple
-    softpurple: "#9287b9",
-
-    //Dark Purple
-    darkpurple: "#432974"
 };
