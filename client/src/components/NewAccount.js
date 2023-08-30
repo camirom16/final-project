@@ -10,8 +10,9 @@ const NewAccount = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        password: '',
         age: '',
+        password: '',
+        confirmPassword: '',
         gender: '',
         allergies: '',
         medication: '',
@@ -32,12 +33,13 @@ const NewAccount = () => {
         }));
     };
 
+    //Password requirements
     const isStrongPassword = (password) => {
-        //Password requirements
         const passwordPattern = /^(?=.*[A-Z])(?=.*[\W_])(?=.*[0-9]).{8,}$/;
         return passwordPattern.test(password);
     }
 
+    //Handle to submit the form
     const handleCreateAccount = (ev) => {
         ev.preventDefault();
 
@@ -52,6 +54,18 @@ const NewAccount = () => {
             alert("You must be at least 18 years old to create an account.");
             return;
         }
+
+        //Check if the password and confirmPassword match
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords do not match. Please confirm your password correctly.");
+            return;
+        }
+
+        //Remove the confirmPassword field from formData
+        const { confirmPassword, ...accountData } = formData
+
+        //Create a new object with the account data to send to the server
+        const accountToServer = { account: accountData }
     
         // POST request to create a new account
             fetch('/account', {
@@ -60,7 +74,7 @@ const NewAccount = () => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ account: formData }),
+                body: JSON.stringify(accountToServer),
             })
                 .then((response) => response.json())
                 .then(data => {
@@ -76,7 +90,6 @@ const NewAccount = () => {
 
     return (
         <Container>
-
             <form onSubmit={(ev) => handleCreateAccount(ev)}>
 
                 <div>
@@ -100,6 +113,11 @@ const NewAccount = () => {
                             <label htmlFor="password">Create a new password: </label>
                             <input type="password" name="password" id="password" value={formData.password} onChange={handleInputChange} required />
                         </AccountInfo>
+
+                        <AccountInfo>
+                            <label htmlFor="confirmPassword">Confirm your password: </label>
+                            <input type="password" name="confirmPassword" id="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
+                        </AccountInfo>
                     </div>
 
                     <Question>
@@ -116,6 +134,8 @@ const NewAccount = () => {
                                 <option value="">Select an option</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
+                                <option value="nobinary">No Binary</option>
+                                <option value="other">Other</option>
                                 <option value="noanswer">I prefer not to answer</option>
                         </select>
                     </Question>

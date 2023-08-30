@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require('bcrypt');
 
 //MongoDb Setup
 const { MongoClient } = require("mongodb");
@@ -40,8 +41,8 @@ const getAccount = async (req, res) => {
 
 //Handler to create a new account
 const createAccount = async (req, res) => {
-    //Extract the value of the form from the req.body
-    const { account } = req.body;
+    //Extract the account data from the req.body
+    const account = req.body.account;
 
     //Generate a custom id
     const accountId = uuidv4();
@@ -52,14 +53,32 @@ const createAccount = async (req, res) => {
         const db = client.db('infoHealth')
         console.log('connected to db');
 
+        console.log('Account password:', account.password);
+
+        //Hash the password
+        const hashedPassword = await bcrypt.hash(account.password, 10);
+
         //Create the document to be inserted
         const accountDocument = {
             _id: accountId,
-            account: account,
+            name: account.name,
+            email: account.email,
+            password: hashedPassword,
+            medicalInfo: {
+                age: account.age,
+                gender: account.gender,
+                allergies: account.allergies,
+                db: account.db,
+                dlp: account.dlp,
+                hta: account.hta,
+                injury: account.injury,
+                medication: account.medication,
+                pregnant: account.pregnant,
+                smoke: account.smoke,
+                weight: account.weight,
+            }
         };
 
-        accountDocument.name = account.name;
-        accountDocument.email = account.email;
 
         //Check if the email already exists in the accounts collection
         const existingAccount = await db.collection('accounts').findOne({ email: accountDocument.email  });
@@ -75,7 +94,7 @@ const createAccount = async (req, res) => {
             return res.status(500).json({ status: 500, message: "Something went wrong during the order creation. Try again" })
         }
             // If the creation of the account in accounts collectionis successful, send Success message and return the account.
-        return res.status(201).json({ status: 201, message: "Account successfully created!", data: accountDocument })
+            return res.status(201).json({ status: 201, message: 'Account successfully created!', data: { _id: accountId, name: account.name, email: account.email } });
     }
     // Catch and log any dev or db errors and notify FE to look at BE console
     catch (err) {
