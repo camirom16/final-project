@@ -17,10 +17,8 @@ const Sidebar = () => {
         <Container>
             <Buttons>
                 <ProfileButtons>
-                    <button onClick={() => navigate(`/profile/${currentUser._id}`)}>Home</button>
-                    {/* <button onClick={() => navigate(`/profile/${currentUser._id}/consultation`)}>Start</button> */}
-                    {/* <button onClick={() => navigate(`/profile/${currentUser._id}/history`)}>History</button> */}
-                    <button onClick={() => navigate(`/profile/${currentUser._id}/settings`)}>Settings</button>
+                    <button onClick={() => navigate(`/profile/${currentUser._id}`)}>New Consultation</button>
+                    <button onClick={() => navigate(`/profile/${currentUser._id}/settings`)}>Account Settings </button>
                 </ProfileButtons>
             </Buttons>
 
