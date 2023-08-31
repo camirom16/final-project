@@ -11,7 +11,7 @@ const options = {
     useUnifiedTopology: true,
 };
 
-//Handler to get the new account
+//HANDLER TO GET THE ACCOUNT BY THE ID
 const getAccount = async (req, res) => {
     const { accountId } = req.params;
 
@@ -19,7 +19,6 @@ const getAccount = async (req, res) => {
     try {
         await client.connect();
         const db = client.db('infoHealth');
-        console.log('connected to db');
 
         //Find the account using the provides id
         const accountFound = await db.collection('accounts').findOne({ _id: accountId });
@@ -35,11 +34,10 @@ const getAccount = async (req, res) => {
     }
     finally {
         client.close();
-        console.log('disconnected from db');
     }
 }
 
-//Handler to create a new account
+//HANDLER TO CREATE A NEW ACCOUNT
 const createAccount = async (req, res) => {
     //Extract the account data from the req.body
     const account = req.body.account;
@@ -51,9 +49,6 @@ const createAccount = async (req, res) => {
     try {
         await client.connect();
         const db = client.db('infoHealth')
-        console.log('connected to db');
-
-        console.log('Account password:', account.password);
 
         //Hash the password
         const hashedPassword = await bcrypt.hash(account.password, 10);
@@ -79,14 +74,13 @@ const createAccount = async (req, res) => {
             }
         };
 
-
         //Check if the email already exists in the accounts collection
         const existingAccount = await db.collection('accounts').findOne({ email: accountDocument.email  });
         if (existingAccount) {
             return res.status(400).json({ status: 400, message: 'An account with this email already exists.' });
         }
 
-        // Inset the new document into the account collection
+        // Insert the new document into the account collection
         const accountCreationResult = await db.collection('accounts').insertOne(accountDocument);
 
         // If it wasn't successful, sent back a 500 and prompt dev for next actions to take
@@ -104,8 +98,45 @@ const createAccount = async (req, res) => {
     // Close connection to db
     finally {
         client.close()
-        console.log('disconnected from db')
     }
 }
 
-module.exports = { getAccount, createAccount };
+//HANDLER TO SIGNIN 
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+    console.log("Received login request:", email, password);
+
+    const client = new MongoClient(MONGO_URI, options);
+
+    try {
+        await client.connect();
+        const db = client.db('infoHealth');
+        console.log('connected');
+
+        //Find the account using the provided email
+        const account = await db.collection('accounts').findOne({ email });
+        if (!account) {
+            return res.status(404).json({ status: 404, message: 'Account not found. Please create a new account.' });
+        }
+
+        //Compare the hashed password with the provided password
+        const passwordMatch = await bcrypt.compare(password, account.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ status: 401, message: 'Incorrect password.' });
+        }
+
+        //Account info successful
+        return res.status(200).json({ status: 200, message: 'Login successful', data: account });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({ status: 500, message: 'An error occurred while loggin in. Verify server.' });
+    }
+    finally {
+        client.close();
+        console.log('disconnected');
+    }
+}
+
+module.exports = { getAccount, createAccount, loginUser };

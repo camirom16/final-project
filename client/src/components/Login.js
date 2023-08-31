@@ -1,9 +1,38 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 const Login = () => {
+    const { accountId } = useParams();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const navigate = useNavigate();
+
+    const handleLogin = (ev) => {
+        ev.preventDefault();
+
+        // POST request login into the account
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ email, password }),
+        })
+            .then((response) => response.json())
+            .then(data => {
+                if (data.status >= 400) {
+                    alert(data.message)
+                }
+                else {
+                    navigate(`/profile/${data.data._id}`);
+                }
+            })
+            .catch((error) => console.log(error.message));
+};
 
     return (
         <Container>
@@ -11,15 +40,16 @@ const Login = () => {
                 <h1>Login</h1>
 
                 <Info>
-                    <label>Email</label>
-                    <Input type='email' />
-                    <label>Password</label>
-                    <Input type='password' />
+                    <label htmlFor='email'>Email</label>
+                    <Input type='email' name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label htmlFor='password'>Password</label>
+                    <Input type='password' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </Info>
+
 
                 <div>
                     {/* Enters to the user's profile */}
-                    <Button onClick={() => navigate("/profile/:profileId")}>Login</Button>
+                    <Button onClick={handleLogin}>Login</Button>
                     <p> Not a member yet? 
                         <LoginLink to='/new-account'>Create your account now!</LoginLink>
                     </p>
@@ -43,7 +73,6 @@ const LoginForm = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* align-items: center; */
     background-color: #9287b9;
     border-radius: 30px;
     padding: 30px;

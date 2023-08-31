@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 
-const { getAccount, createAccount } = require('./handlers')
+const { getAccount, createAccount, loginUser } = require('./handlers')
 
 const PORT = 8000;
 
@@ -14,6 +14,9 @@ app.use(express.json())
 .get('/account/:accountId', getAccount)
 //To create a new account
 app.post('/account', createAccount)
+
+// To login the user
+app.post('/login', loginUser)
 
 app.listen(PORT, () => {
     console.log(`Server listening on port: ${PORT}`);
