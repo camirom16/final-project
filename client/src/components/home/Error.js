@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import error from '../assets/error.png';
+import error from '../../assets/error.png';
 
 const Error = () => {
     return (

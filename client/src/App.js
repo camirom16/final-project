@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './styling/App.css';
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import HomePage from "./components/HomePage";
-import NewAccount from "./components/NewAccount";
-import Login from "./components/Login";
-import Error from "./components/Error";
+import Header from "./components/home/Header";
+import Footer from "./components/home/Footer";
+import HomePage from "./components/home/HomePage";
+import NewAccount from "./components/account/NewAccount";
+import Login from "./components/account/Login";
+import Error from "./components/home/Error";
 import GlobalStyles from "./styling/GlobalStyles";
-import ConfirmationAccount from "./components/ConfirmationAccount";
-import Profile from "./components/Profile";
+import ConfirmationAccount from "./components/account/ConfirmationAccount";
+import Profile from "./components/profile/Profile";
 
 const App = () => {
   return (

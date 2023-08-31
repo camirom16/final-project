@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { COLORS } from "../styling/constants";
+import { COLORS } from "../../styling/constants";
 import { useEffect, useState } from "react";
 
 const ConfirmationAccount = () => {

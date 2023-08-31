@@ -8,8 +8,6 @@ const Profile = () => {
         return <p>Please log in to view your profile.</p>;
     }
 
-    
-
     return (
         <div>
             <h2>Welcome, {currentUser.name}!</h2>

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import logo from '../assets/logo.png';
-import nhs from '../assets/nhs_attribution.png';
+import logo from '../../assets/logo.png';
+import nhs from '../../assets/nhs_attribution.png';
 
 import { FiFacebook as Fb } from "react-icons/fi";
 import { FiInstagram as Insta } from "react-icons/fi";

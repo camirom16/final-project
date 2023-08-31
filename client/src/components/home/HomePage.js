@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import homeimg from '../assets/homepageimg.png'
+import homeimg from '../../assets/homepageimg.png';
 
 const HomePage = () => {
     return (

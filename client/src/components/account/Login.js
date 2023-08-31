@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../profile/UserContext";
 
 const Login = () => {
     const { currentUser, setCurrentUser } = useContext(UserContext)

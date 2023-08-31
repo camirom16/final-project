@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
-import { COLORS } from "../styling/constants";
+import { COLORS } from "../../styling/constants";
 
 const NewAccount = () => {
     const navigate = useNavigate();

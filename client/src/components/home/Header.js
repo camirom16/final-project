@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
-import logo from '../assets/logo.png'
+import logo from '../../assets/logo.png'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FiUser as User } from "react-icons/fi";
 import { useContext } from "react";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../profile/UserContext";
 
 const Header = () => {
     const { currentUser } = useContext(UserContext);
