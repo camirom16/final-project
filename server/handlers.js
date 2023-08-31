@@ -101,10 +101,9 @@ const createAccount = async (req, res) => {
     }
 }
 
-//HANDLER TO SIGNIN 
+//HANDLER TO SIGNIN BY EMAIL AND PASSWORD
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
-    console.log("Received login request:", email, password);
 
     const client = new MongoClient(MONGO_URI, options);
 
@@ -123,7 +122,7 @@ const loginUser = async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, account.password);
 
         if (!passwordMatch) {
-            return res.status(401).json({ status: 401, message: 'Incorrect password.' });
+            return res.status(401).json({ status: 401, message: 'Incorrect password. Please try again.' });
         }
 
         //Account info successful

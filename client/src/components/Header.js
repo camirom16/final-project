@@ -3,8 +3,11 @@ import logo from '../assets/logo.png'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FiUser as User } from "react-icons/fi";
+import { useContext } from "react";
+import { UserContext } from "./UserContext";
 
 const Header = () => {
+    const { currentUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     return (
@@ -17,10 +20,19 @@ const Header = () => {
                     <PageLink to="/ressources">Ressources</PageLink>
                 </Pages>
 
-                <Buttons>
-                    <Button onClick={() => navigate("/new-account")}>Create an account</Button>
-                    <PageLink to="/login"><User size={26} /> Login</PageLink>
-                </Buttons>
+                <div>
+                    {currentUser ? (
+                        <Button onClick={() => navigate(`/profile/${currentUser._id}`)}>
+                            <User size={26} /> Hello, {currentUser.name}!
+                        </Button>
+                    ) : (
+                        <Buttons>
+                            <Button onClick={() => navigate("/new-account")}>Create an account</Button>
+                            <PageLink to="/login"><User size={26} /> Login</PageLink>
+                        </Buttons>
+                    )}
+                    
+                </div>
             </NavBar>
         </Container>
     )

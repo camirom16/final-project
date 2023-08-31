@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
+import { UserContext } from "./UserContext";
 
 const Login = () => {
+    const { currentUser, setCurrentUser } = useContext(UserContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const navigate = useNavigate();
 
     const handleLogin = (ev) => {
@@ -16,8 +17,8 @@ const Login = () => {
         fetch('/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ email, password }),
         })
@@ -27,11 +28,19 @@ const Login = () => {
                     alert(data.message)
                 }
                 else {
+                    setCurrentUser(data.data);
+                    sessionStorage.setItem('currentUser', JSON.stringify(data.data))
                     navigate(`/profile/${data.data._id}`);
                 }
             })
             .catch((error) => console.log(error.message));
-};
+    };
+
+    useEffect(() => {
+        if (currentUser) {
+            navigate(`/profile/${currentUser._id}`);
+        }
+    }, [currentUser, navigate]);
 
     return (
         <Container>

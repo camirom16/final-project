@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Error from "./components/Error";
 import GlobalStyles from "./styling/GlobalStyles";
 import ConfirmationAccount from "./components/ConfirmationAccount";
+import Profile from "./components/Profile";
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
             <Route path='/new-account' element={<NewAccount />} />
             <Route path='/account/:accountId' element={<ConfirmationAccount />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/profile/:profileId' element={<h1>Profile</h1>} />
+            <Route path='/profile/:profileId' element={<Profile />} />
             <Route path='*' element={<Error />} />
             
           </Routes>
