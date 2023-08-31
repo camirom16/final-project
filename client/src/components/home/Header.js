@@ -22,9 +22,11 @@ const Header = () => {
 
                 <div>
                     {currentUser ? (
-                        <Button onClick={() => navigate(`/profile/${currentUser._id}`)}>
-                            <User size={26} /> Hello, {currentUser.name}!
-                        </Button>
+                        <Buttons>
+                            <Button onClick={() => navigate(`/profile/${currentUser._id}`)}>
+                                <User size={26} /> Hello, {currentUser.name}!
+                            </Button>
+                        </Buttons>
                     ) : (
                         <Buttons>
                             <Button onClick={() => navigate("/new-account")}>Create an account</Button>

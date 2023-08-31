@@ -30,7 +30,7 @@ const Login = () => {
                 else {
                     setCurrentUser(data.data);
                     sessionStorage.setItem('currentUser', JSON.stringify(data.data))
-                    navigate(`/profile/${data.data._id}`);
+                    // navigate(`/profile/${data.data._id}`);
                 }
             })
             .catch((error) => console.log(error.message));

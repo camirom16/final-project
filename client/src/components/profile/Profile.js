@@ -1,19 +1,37 @@
 import React, { useContext } from "react";
-import { UserContext } from "./UserContext"; // Adjust the path
+import { UserContext } from "../profile/UserContext";
+import { styled } from "styled-components";
+import Sidebar from "./SideBar";
 
 const Profile = () => {
     const { currentUser } = useContext(UserContext);
 
-    if (!currentUser) {
-        return <p>Please log in to view your profile.</p>;
-    }
 
     return (
-        <div>
-            <h2>Welcome, {currentUser.name}!</h2>
-            {/* Profile content */}
-        </div>
+
+        <Container>
+            <Sidebar />
+
+            <Content>
+                Hello, {currentUser.name}
+            </Content>
+            
+        </Container>
     );
 };
+
+const Container = styled.div`
+    width: 100vw;
+    display: flex;
+    gap: 40px;
+`
+
+const Content = styled.div`
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 80vw;
+`
+
+
 
 export default Profile;
