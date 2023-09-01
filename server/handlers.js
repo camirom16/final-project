@@ -137,9 +137,9 @@ const loginUser = async (req, res) => {
 }
 
 //HANDLER TO UPDATE USER'S MEDICAL INFORMATION OR PASSWORD
-const updateUser = async (req, res) => {
+const updateAccount = async (req, res) => {
     const { accountId } = req.params;
-    const updatedData = req.body.updatedData;
+    const { updatedInfo } = req.body;
 
     const client = new MongoClient(MONGO_URI, options);
 
@@ -148,25 +148,25 @@ const updateUser = async (req, res) => {
         const db = client.db('infoHealth');
         console.log('connected');
 
+        //Update the user's medical information or password
         const updateResult = await db.collection('accounts').updateOne(
             { _id: accountId },
-            { $set: { "medicalInfo": updatedData.medicalInfo, "password": updatedData.password } }
+            { $set: updatedInfo }
         );
 
-        if (!updateResult.matchedCount) {
+        if (updateResult.modifiedCount === 0) {
             return res.status(404).json({ status: 404, message: 'Account not found. Cannot update.' });
         }
-
-        return res.status(200).json({ status: 200, message: 'Account updated successfully' });
-    }
+        return res.status(200).json({ status: 200, message: 'Account information updated successfully' });
+    } 
     catch (err) {
         console.log(err);
-        return res.status(500).json({ status: 500, message: 'An error occurred while updating the account. Verify server.' });
-    }
+        return res.status(500).json({ status: 500, message: 'An error occurred while updating account information. Verify server.' });
+    } 
     finally {
         client.close();
         console.log('disconnected');
     }
 }
 
-module.exports = { getAccount, createAccount, loginUser, updateUser };
+module.exports = { getAccount, createAccount, loginUser, updateAccount };

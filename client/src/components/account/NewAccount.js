@@ -230,10 +230,10 @@ const NewAccount = () => {
                             <input type="radio" className='radio' id="smokeyes" name="smoke" value="yes" required={true} onChange={handleInputChange} />
                             <label htmlFor="smokeyes">Yes</label>
 
-                            <input type="radio" className='radio' id="smokeno" name="smoke" value="no" checked={formData.smoke === "no"} onChange={handleInputChange} />
+                            <input type="radio" className='radio' id="smokeno" name="smoke" value="no" onChange={handleInputChange} />
                             <label htmlFor="smokeno">No</label>
                         
-                            <input type="radio" className='radio' id="smokeunknown" name="smoke" value="unknown" checked={formData.smoke === "unknown"} onChange={handleInputChange} />
+                            <input type="radio" className='radio' id="smokeunknown" name="smoke" value="unknown" onChange={handleInputChange} />
                             <label htmlFor="smokeunknown">I don't know</label>
                         </div>
                     </Question>
@@ -244,10 +244,10 @@ const NewAccount = () => {
                             <input type="radio" className='radio' id="injuryyes" name="injury" value="yes" required={true} onChange={handleInputChange} />
                             <label htmlFor="injuryyes">Yes</label>
 
-                            <input type="radio" className='radio' id="injuryno" name="injury" value="no" checked={formData.injury === "no"} onChange={handleInputChange} />
+                            <input type="radio" className='radio' id="injuryno" name="injury" value="no" onChange={handleInputChange} />
                             <label htmlFor="injuryno">No</label>
                         
-                            <input type="radio" className='radio' id="injuryunknown" name="injury" value="unknown" checked={formData.injury === "unknown"} onChange={handleInputChange} />
+                            <input type="radio" className='radio' id="injuryunknown" name="injury" value="unknown" onChange={handleInputChange} />
                             <label htmlFor="injuryunknown">I don't know</label>
                         </div>
                     </Question>
@@ -258,10 +258,10 @@ const NewAccount = () => {
                             <input type="radio" className='radio' id="pregnantyes" name="pregnant" value="yes" required={true} onChange={handleInputChange} />
                             <label htmlFor="pregnantyes">Yes</label>
 
-                            <input type="radio" className='radio' id="pregnantno" name="pregnant" value="no" checked={formData.pregnant === "no"} onChange={handleInputChange} />
+                            <input type="radio" className='radio' id="pregnantno" name="pregnant" value="no" onChange={handleInputChange} />
                             <label htmlFor="pregnantno">No</label>
                         
-                            <input type="radio" className='radio' id="pregnantunknown" name="pregnant" value="unknown" checked={formData.pregnant === "unknown"} onChange={handleInputChange} />
+                            <input type="radio" className='radio' id="pregnantunknown" name="pregnant" value="unknown" onChange={handleInputChange} />
                             <label htmlFor="pregnantunknown">I don't know</label>
                         </div>
                     </Question>

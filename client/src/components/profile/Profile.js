@@ -18,9 +18,11 @@ const Profile = () => {
                 <ProfileStart>
                     <div>
                         <h1>WHAT CONCERNS YOU ABOUT YOUR HEALTH TODAY?</h1>
+                    </div>
+
+                    <div>
                         <p>Check in our list about your symptom and learn more about it.</p>
-                        <p>The information you give is safe and won't be shared.</p>
-                        <p>Your results will include: recommandations on what to do next.</p>
+                        <p>Your results will include recommandations on what to do next.</p>
                     </div>
 
                     <div>
@@ -34,8 +36,10 @@ const Profile = () => {
                     <div>
                         <h2>Term of Service</h2>
                         <p>Before using the checkup, please read the Terms of Service and remember:</p>
-                        <p>InfoHealth is nott a diagnosis. It's only for your information and not a qualified medical opinion.</p>
-                        <p>InfoHealth is not for emergencies. If there's a helth emergency, please compose the 911 for immediatly assistance.</p>
+                        <ul>
+                        <li>InfoHealth is not a diagnosis. It's only for your information and not a qualified medical opinion.</li>
+                        <li>InfoHealth is not for emergencies. If this is a medical emergency, please dial 911 for immediate assistance.</li>
+                        </ul>
                     </div>
 
                     <div>
@@ -76,7 +80,7 @@ const ProfileStart = styled.div`
     }
 `
 const Img = styled.img`
-    width: 20vw;
+    width: 22vw;
 `
 
 const Container = styled.div`

@@ -9,7 +9,7 @@ import Error from "./components/home/Error";
 import GlobalStyles from "./styling/GlobalStyles";
 import ConfirmationAccount from "./components/account/ConfirmationAccount";
 import Profile from "./components/profile/Profile";
-import Update from "./components/profile/Update";
+import UpdateAccount from "./components/profile/UpdateAccount";
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ const App = () => {
             <Route path='/account/:accountId' element={<ConfirmationAccount />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile/:profileId' element={<Profile />} />
-            <Route path='/profile/:profileId/settings' element={<Update />} />
+            <Route path='/profile/:profileId/settings' element={<UpdateAccount />} />
             <Route path='*' element={<Error />} />
             
           </Routes>

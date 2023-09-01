@@ -1,99 +1,100 @@
-import React, { useContext, useState } from "react";
-import { UserContext } from "./UserContext";
 import { styled } from "styled-components";
 import Sidebar from "./SideBar";
-import { COLORS } from "../../styling/constants";
+import { useContext, useState } from "react";
+import { UserContext } from "./UserContext";
 
-const Update = () => {
+const UpdateAccount = () => {
     const { currentUser } = useContext(UserContext);
-    // console.log(currentUser)
+    console.log(currentUser._id)
 
-    const [newFormData, setNewFormData] = useState({
-        name: '',
-        email: '',
-        age: '',
-        password: '',
-        confirmPassword: '',
-        gender: '',
-        allergies: '',
-        medication: '',
-        weight: '',
-        hta: '',
-        dlp: '',
-        db: '',
-        smoke: '',
-        injury: '',
-        pregnant: '',
+    const [formData, setFormData] = useState({
+        medicalInfo: {
+            age: currentUser.medicalInfo.age,
+            gender: currentUser.medicalInfo.gender,
+            allergies: currentUser.medicalInfo.allergies,
+            db: currentUser.medicalInfo.db,
+            dlp: currentUser.medicalInfo.dlp,
+            hta: currentUser.medicalInfo.hta,
+            injury: currentUser.medicalInfo.injury,
+            medication: currentUser.medicalInfo.medication,
+            pregnant: currentUser.medicalInfo.pregnant,
+            smoke: currentUser.medicalInfo.smoke,
+            weight: currentUser.medicalInfo.weight,
+        }
     });
+
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setNewFormData((prevData) => ({
+        setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
-    const handleUpdateSubmit = (ev) => {
+    const handleUpdateAccount = (ev) => {
         ev.preventDefault();
 
-        fetch(`/account/${currentUser.id}/update`, {
-            method: 'PUT',
+        // Combine formData and passwordData into a single object
+        const updatedInfo = { ...formData };
+
+        // PATCH request to update the account
+        fetch(`/account/${currentUser._id}`, {
+            method: "PATCH",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
+                "Accept": "application/json",
             },
-            body: JSON.stringify(newFormData),
+            body: JSON.stringify({ updatedInfo }),
         })
             .then((response) => response.json())
-            .then(data => {
-                if (data.status >= 400) {
-                    alert(data.message)
-                }
-                else {
-                    console.log('Account updated:', data)
+            .then((data) => {
+                if (data.status === 200) {
+                    console.log(updatedInfo);
+                } else {
+                    alert(data.message);
                 }
             })
-            .catch((error) => console.log(error.message));
-    }
+        .catch((error) => console.log("Fetch error:", error.message));
+    };
 
     return (
-
         <Container>
             <Sidebar />
 
             <Content>
-                <form onSubmit={handleUpdateSubmit}> 
+                <form onSubmit={(ev) => handleUpdateAccount(ev)}>
 
                     <div>
-                        <h1>Update your profile</h1>
-                        <p>Please, complete this form if your medical information has changed.</p>
+                        <h1>Update your account</h1>
+                        <p>Please, update your medical information or you password.</p>
                     </div>
                     
                     <div> 
                         <div>
+
                             <AccountInfo>
-                                <label htmlFor="password">Change your password: </label>
-                                <input type="password" name="password" id="password" value={newFormData.password} onChange={handleInputChange} />
+                                <label htmlFor="password">Create a new password: </label>
+                                <input type="password" name="password" id="password" onChange={handleInputChange}/>
                             </AccountInfo>
 
                             <AccountInfo>
                                 <label htmlFor="confirmPassword">Confirm your password: </label>
-                                <input type="password" name="confirmPassword" id="confirmPassword" value={newFormData.confirmPassword} onChange={handleInputChange} />
+                                <input type="password" name="confirmPassword" id="confirmPassword" onChange={handleInputChange} />
                             </AccountInfo>
                         </div>
 
                         <Question>
                             <label htmlFor="age">How old are you? </label>
                             <div>
-                                <input className='age' type="age" name="age" id="age" maxLength="2" value={currentUser.medicalInfo.age} onChange={handleInputChange} />
-                                <span className='age'>years</span>
+                                <input className='age' type="age" name="age" id="age" maxLength="2" value={formData.age} onChange={handleInputChange} />
+                                <span>years</span>
                             </div>
                         </Question>
 
                         <Question>
                             <label htmlFor="gender">What is your gender?</label>
-                            <select name="gender" id="gender" value={currentUser.medicalInfo.gender} onChange={handleInputChange}>
+                            <select name="gender" id="gender" onChange={handleInputChange}>
                                     <option value="">Select an option</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -104,21 +105,21 @@ const Update = () => {
                         </Question>
 
                         <Question>
-                            <label>Do you have any allergies? <span>Your answer: {currentUser.medicalInfo.allergies}</span></label>
+                            <label>Do you have any allergies?</label>
                             <div>
-                                    <input type="radio" className='radio' id="allergiesyes" name="allergies" value="yes" onChange={handleInputChange} />
-                                    <label htmlFor="allergiesyes">Yes</label>
+                                <input type="radio" className='radio' id="allergiesyes" name="allergies" value="yes" onChange={handleInputChange} />
+                                <label htmlFor="allergiesyes">Yes</label>
 
-                                    <input type="radio" className='radio' id="allergiesno" name="allergies" value="no" onChange={handleInputChange} />
-                                    <label htmlFor="allergiesno">No</label>
-                                
-                                    <input type="radio" className='radio' id="allergiesunknown" name="allergies" value="unknown" onChange={handleInputChange} />
-                                    <label htmlFor="allergiesunknown">I don't know</label>
+                                <input type="radio" className='radio' id="allergiesno" name="allergies" value="no" onChange={handleInputChange} />
+                                <label htmlFor="allergiesno">No</label>
+                            
+                                <input type="radio" className='radio' id="allergiesunknown" name="allergies" value="unknown" onChange={handleInputChange} />
+                                <label htmlFor="allergiesunknown">I don't know</label>
                             </div>
                         </Question>
 
                         <Question>
-                            <label>Do you take medication on a regular basis? <span>Your answer: {currentUser.medicalInfo.medication}</span></label>
+                            <label>Do you take medication on a regular basis?</label>
                             <div>
                                 <input type="radio" className='radio' id="medicationyes" name="medication" value="yes" onChange={handleInputChange} />
                                 <label htmlFor="medicationyes">Yes</label>
@@ -132,7 +133,7 @@ const Update = () => {
                         </Question>
 
                         <Question>
-                            <label>Are you overweight or obese? <span>Your answer: {currentUser.medicalInfo.weight}</span></label>
+                            <label>Are you overweight or obese?</label>
                             <div>
                                 <input type="radio" className='radio' id="weightyes" name="weight" value="yes" onChange={handleInputChange} />
                                 <label htmlFor="weightyes">Yes</label>
@@ -146,7 +147,7 @@ const Update = () => {
                         </Question>
 
                         <Question>
-                            <label>Do you have hypertension? <span>Your answer: {currentUser.medicalInfo.hta}</span></label>
+                            <label>Do you have hypertension?</label>
                             <div>
                                 <input type="radio" className='radio' id="htayes" name="hta" value="yes" onChange={handleInputChange} />
                                 <label htmlFor="htayes">Yes</label>
@@ -160,7 +161,7 @@ const Update = () => {
                         </Question>
 
                         <Question>
-                            <label>Do you have hight cholesterol? <span>Your answer: {currentUser.medicalInfo.dlp}</span></label>
+                            <label>Do you have hight cholesterol?</label>
                             <div>
                                 <input type="radio" className='radio' id="dlpyes" name="dlp" value="yes" onChange={handleInputChange} />
                                 <label htmlFor="dlpyes">Yes</label>
@@ -174,7 +175,7 @@ const Update = () => {
                         </Question>
 
                         <Question>
-                            <label>Do you have diabetes? <span>Your answer: {currentUser.medicalInfo.db}</span></label>
+                            <label>Do you have diabetes?</label>
                             <div>
                                 <input type="radio" className='radio' id="dbyes" name="db" value="yes" onChange={handleInputChange} />
                                 <label htmlFor="dbyes">Yes</label>
@@ -188,76 +189,77 @@ const Update = () => {
                         </Question>
 
                         <Question>
-                            <label>Have you smoked cigarettes for at least 10 years? <span>Your answer: {currentUser.medicalInfo.smoke}</span></label>
+                            <label>Have you smoked cigarettes for at least 10 years?</label>
                             <div>
                                 <input type="radio" className='radio' id="smokeyes" name="smoke" value="yes" onChange={handleInputChange} />
                                 <label htmlFor="smokeyes">Yes</label>
 
-                                <input type="radio" className='radio' id="smokeno" name="smoke" value="no" checked={newFormData.smoke === "no"} onChange={handleInputChange} />
+                                <input type="radio" className='radio' id="smokeno" name="smoke" value="no" onChange={handleInputChange} />
                                 <label htmlFor="smokeno">No</label>
                             
-                                <input type="radio" className='radio' id="smokeunknown" name="smoke" value="unknown" checked={newFormData.smoke === "unknown"} onChange={handleInputChange} />
+                                <input type="radio" className='radio' id="smokeunknown" name="smoke" value="unknown" onChange={handleInputChange} />
                                 <label htmlFor="smokeunknown">I don't know</label>
                             </div>
                         </Question>
 
                         <Question>
-                            <label>Have you recently suffered an injury or an operation? <span>Your answer: {currentUser.medicalInfo.injury}</span></label>
+                            <label>Have you recently suffered an injury or an operation?</label>
                             <div>
                                 <input type="radio" className='radio' id="injuryyes" name="injury" value="yes" onChange={handleInputChange} />
                                 <label htmlFor="injuryyes">Yes</label>
 
-                                <input type="radio" className='radio' id="injuryno" name="injury" value="no" checked={newFormData.injury === "no"} onChange={handleInputChange} />
+                                <input type="radio" className='radio' id="injuryno" name="injury" value="no" onChange={handleInputChange} />
                                 <label htmlFor="injuryno">No</label>
                             
-                                <input type="radio" className='radio' id="injuryunknown" name="injury" value="unknown" checked={newFormData.injury === "unknown"} onChange={handleInputChange} />
+                                <input type="radio" className='radio' id="injuryunknown" name="injury" value="unknown" onChange={handleInputChange} />
                                 <label htmlFor="injuryunknown">I don't know</label>
                             </div>
                         </Question>
 
                         <Question>
-                            <label>Are you pregnant? <span>Your answer: {currentUser.medicalInfo.pregnant}</span></label>
+                            <label>Are you pregnant?</label>
                             <div>
                                 <input type="radio" className='radio' id="pregnantyes" name="pregnant" value="yes" onChange={handleInputChange} />
                                 <label htmlFor="pregnantyes">Yes</label>
 
-                                <input type="radio" className='radio' id="pregnantno" name="pregnant" value="no" checked={newFormData.pregnant === "no"} onChange={handleInputChange} />
+                                <input type="radio" className='radio' id="pregnantno" name="pregnant" value="no" onChange={handleInputChange} />
                                 <label htmlFor="pregnantno">No</label>
                             
-                                <input type="radio" className='radio' id="pregnantunknown" name="pregnant" value="unknown" checked={newFormData.pregnant === "unknown"} onChange={handleInputChange} />
+                                <input type="radio" className='radio' id="pregnantunknown" name="pregnant" value="unknown" onChange={handleInputChange} />
                                 <label htmlFor="pregnantunknown">I don't know</label>
                             </div>
                         </Question>
-                    </div>  
+
+                    </div>   
 
                     <div>
                         <button type="submit">Update</button>
                     </div>
                 </form>
             </Content>
-            
-        </Container>
-    );
+        </Container >
+    )
 };
 
 const Container = styled.div`
+    width: 100vw;
     display: flex;
-    gap: 15%;
+    gap: 260px;
 `
 
 const Content = styled.div`
+    display: flex;
+    align-items: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    width: 50vw;
+    width: 60vw;
+    gap: 10%;
 
     & form {
         background-color: transparent;
     }
-
-    & p {
-        margin-bottom: 20px;
-    }
 `
+
 const AccountInfo = styled.div`
     width: 65%;
     display: flex;
@@ -274,14 +276,7 @@ const Question = styled.div`
     & .age {
         width: 10%;
         text-align: center;
-        color: black;
-    }
-
-    & span {
-        color: ${COLORS.buttons};
-        font-style: italic;
     }
 `;
 
-
-export default Update;
+export default UpdateAccount;
