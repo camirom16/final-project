@@ -2,12 +2,15 @@ import { styled } from "styled-components";
 import Sidebar from "./SideBar";
 import { useContext, useState } from "react";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 const UpdateAccount = () => {
     const { currentUser } = useContext(UserContext);
-    console.log(currentUser._id)
 
-    const [formData, setFormData] = useState({
+    const navigate = useNavigate();
+
+    // Initialize the formData with the current user's data
+    const initialFormData = {
         medicalInfo: {
             age: currentUser.medicalInfo.age,
             gender: currentUser.medicalInfo.gender,
@@ -20,14 +23,29 @@ const UpdateAccount = () => {
             pregnant: currentUser.medicalInfo.pregnant,
             smoke: currentUser.medicalInfo.smoke,
             weight: currentUser.medicalInfo.weight,
-        }
-    });
+        },
+        password: currentUser.password,
+    };
 
+    // Use state to track changes in formData
+    const [formData, setFormData] = useState(initialFormData);
+
+    // Initialize a state variable to track the updated fields
+    const [updatedFields, setUpdatedFields] = useState({});
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
             ...prevData,
+            medicalInfo: {
+                ...prevData.medicalInfo,
+                [name]: value,
+            },
+        }));
+
+        // Update the updatedFields state with the changed field
+        setUpdatedFields((prevFields) => ({
+            ...prevFields,
             [name]: value,
         }));
     };
@@ -35,26 +53,24 @@ const UpdateAccount = () => {
     const handleUpdateAccount = (ev) => {
         ev.preventDefault();
 
-        // Combine formData and passwordData into a single object
-        const updatedInfo = { ...formData };
-
-        // PATCH request to update the account
+        // PATCH request to update the account and only the updated fields are send to the BE
         fetch(`/account/${currentUser._id}`, {
             method: "PATCH",
             headers: {
-                "Content-Type": "application/json",
                 "Accept": "application/json",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify({ updatedInfo }),
+            body: JSON.stringify({ fieldsToUpdate: updatedFields }),
         })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.status === 200) {
-                    console.log(updatedInfo);
-                } else {
-                    alert(data.message);
-                }
-            })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status >= 400) {
+                alert(data.message);
+            } else {
+                alert('Account information updated successfully');
+                navigate(`/profile/${currentUser._id}`);
+            }
+        })
         .catch((error) => console.log("Fetch error:", error.message));
     };
 
@@ -72,7 +88,6 @@ const UpdateAccount = () => {
                     
                     <div> 
                         <div>
-
                             <AccountInfo>
                                 <label htmlFor="password">Create a new password: </label>
                                 <input type="password" name="password" id="password" onChange={handleInputChange}/>
@@ -245,7 +260,7 @@ const Container = styled.div`
     width: 100vw;
     display: flex;
     gap: 260px;
-`
+`;
 
 const Content = styled.div`
     display: flex;
@@ -258,7 +273,7 @@ const Content = styled.div`
     & form {
         background-color: transparent;
     }
-`
+`;
 
 const AccountInfo = styled.div`
     width: 65%;

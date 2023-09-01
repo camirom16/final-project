@@ -139,19 +139,24 @@ const loginUser = async (req, res) => {
 //HANDLER TO UPDATE USER'S MEDICAL INFORMATION OR PASSWORD
 const updateAccount = async (req, res) => {
     const { accountId } = req.params;
-    const { updatedInfo } = req.body;
+    const { fieldsToUpdate } = req.body;
 
     const client = new MongoClient(MONGO_URI, options);
 
     try {
         await client.connect();
         const db = client.db('infoHealth');
-        console.log('connected');
 
-        //Update the user's medical information or password
+        // Construct an object to use with the $set operator for updating
+        const updateObject = {};
+        for (const field in fieldsToUpdate) {
+            updateObject[`medicalInfo.${field}`] = fieldsToUpdate[field];
+        }
+
+        // Update the user's medical information
         const updateResult = await db.collection('accounts').updateOne(
             { _id: accountId },
-            { $set: updatedInfo }
+            { $set: updateObject }
         );
 
         if (updateResult.modifiedCount === 0) {
@@ -165,8 +170,7 @@ const updateAccount = async (req, res) => {
     } 
     finally {
         client.close();
-        console.log('disconnected');
     }
-}
+};
 
 module.exports = { getAccount, createAccount, loginUser, updateAccount };

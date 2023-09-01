@@ -30,7 +30,6 @@ const Login = () => {
                 else {
                     setCurrentUser(data.data);
                     sessionStorage.setItem('currentUser', JSON.stringify(data.data))
-                    // navigate(`/profile/${data.data._id}`);
                 }
             })
             .catch((error) => console.log(error.message));
@@ -73,7 +72,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 
 const LoginForm = styled.div`
     height: 30vh;
@@ -86,13 +85,13 @@ const LoginForm = styled.div`
     padding: 30px;
     font-size: 1vw;
     text-align: center;
-`
+`;
 
 const Info = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`
+`;
 
 const Input = styled.input`
     width: 60%;
@@ -100,7 +99,7 @@ const Input = styled.input`
     border-radius: 20px;
     margin: 10px 0 20px 0;
     padding: 5px 15px;
-`
+`;
 
 const Button = styled.button`
     width: 10vw;
@@ -119,11 +118,11 @@ const Button = styled.button`
     &:hover {
         scale: 1.1;
     }
-`
+`;
 
 const LoginLink = styled(Link)`
     text-decoration: none;
     color: #432974;
-`
+`;
 
 export default Login;
