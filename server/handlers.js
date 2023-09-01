@@ -147,28 +147,41 @@ const updateAccount = async (req, res) => {
         await client.connect();
         const db = client.db('infoHealth');
 
-        // Construct an object to use with the $set operator for updating
-        const updateObject = {};
-        for (const field in fieldsToUpdate) {
-            updateObject[`medicalInfo.${field}`] = fieldsToUpdate[field];
-        }
+        // Check if the fieldsToUpdate object contains the 'password' field
+        if ('password' in fieldsToUpdate) {
+            // Handle password update
+            const hashedPassword = await bcrypt.hash(fieldsToUpdate.password, 10);
+            const updateResult = await db.collection('accounts').updateOne(
+                { _id: accountId },
+                { $set: { password: hashedPassword } }
+            );
 
-        // Update the user's medical information
-        const updateResult = await db.collection('accounts').updateOne(
-            { _id: accountId },
-            { $set: updateObject }
-        );
+            if (updateResult.modifiedCount === 0) {
+                return res.status(404).json({ status: 404, message: 'Account not found. Cannot update.' });
+            }
+            return res.status(200).json({ status: 200, message: 'Password updated successfully' });
+        } 
+        else {
+            // Handle medical information update
+            const updateObject = {};
+            for (const field in fieldsToUpdate) {
+                updateObject[`medicalInfo.${field}`] = fieldsToUpdate[field];
+            }
 
-        if (updateResult.modifiedCount === 0) {
-            return res.status(404).json({ status: 404, message: 'Account not found. Cannot update.' });
+            const updateResult = await db.collection('accounts').updateOne(
+                { _id: accountId },
+                { $set: updateObject }
+            );
+
+            if (updateResult.modifiedCount === 0) {
+                return res.status(404).json({ status: 404, message: 'Account not found. Cannot update.' });
+            }
+            return res.status(200).json({ status: 200, message: 'Account information updated successfully' });
         }
-        return res.status(200).json({ status: 200, message: 'Account information updated successfully' });
-    } 
-    catch (err) {
+    } catch (err) {
         console.log(err);
         return res.status(500).json({ status: 500, message: 'An error occurred while updating account information. Verify server.' });
-    } 
-    finally {
+    } finally {
         client.close();
     }
 };

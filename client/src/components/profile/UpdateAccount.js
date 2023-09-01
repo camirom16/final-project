@@ -25,6 +25,7 @@ const UpdateAccount = () => {
             weight: currentUser.medicalInfo.weight,
         },
         password: currentUser.password,
+        confirmPassword: '',
     };
 
     // Use state to track changes in formData
@@ -33,15 +34,29 @@ const UpdateAccount = () => {
     // Initialize a state variable to track the updated fields
     const [updatedFields, setUpdatedFields] = useState({});
 
+    // Initialize a state variable for the password input
+    const [newPassword, setNewPassword] = useState('');
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            medicalInfo: {
-                ...prevData.medicalInfo,
+        if (name === 'password') {
+            // Handle changes in the password field
+            setNewPassword(value);
+        } else if (name === 'confirmPassword') {
+            setFormData((prevData) => ({
+                ...prevData,
                 [name]: value,
-            },
-        }));
+            }));
+        } else {
+            // Handle changes in other fields
+            setFormData((prevData) => ({
+                ...prevData,
+                medicalInfo: {
+                    ...prevData.medicalInfo,
+                    [name]: value,
+                },
+            }));
+        }
 
         // Update the updatedFields state with the changed field
         setUpdatedFields((prevFields) => ({
@@ -52,6 +67,19 @@ const UpdateAccount = () => {
 
     const handleUpdateAccount = (ev) => {
         ev.preventDefault();
+
+        // Check if the password and confirmPassword match
+        if (newPassword && newPassword !== formData.confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        // Check if the password is as required
+        const passwordPattern = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+        if (newPassword && !passwordPattern.test(newPassword)) {
+            alert("Password must be at least 8 characters long and include an uppercase letter, a symbol, and a number.");
+            return;
+        }
 
         // PATCH request to update the account and only the updated fields are send to the BE
         fetch(`/account/${currentUser._id}`, {
