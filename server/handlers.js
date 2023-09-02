@@ -186,4 +186,40 @@ const updateAccount = async (req, res) => {
     }
 };
 
-module.exports = { getAccount, createAccount, loginUser, updateAccount };
+//HANDLER TO DELETE THE USER'S ACCOUNT
+const deleteAccount = async (req, res) => {
+    const { accountId } = req.params;
+
+    const client = new MongoClient(MONGO_URI, options);
+
+    try {
+        await client.connect();
+        const db = client.db('infoHealth');
+        console.log('connected');
+
+        // Check if the account exists
+        const existingAccount = await db.collection('accounts').findOne({ _id: accountId });
+
+        if (!existingAccount) {
+            return res.status(404).json({ status: 404, message: 'Account not found.' });
+        }
+
+        //Delete the account
+        const deleteResult = await db.collection('accounts').deleteOne({ _id: accountId });
+
+        if (deleteResult.deletedCount === 1) {
+            return res.status(200).json({ status: 200, message: 'Account deleted successfully' });
+        } else {
+            return res.status(500).json({ status: 500, message: 'Failed to delete account. Try again later.' });
+        }
+    } 
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({ status: 500, message: 'An error occurred while deleting account information. Verify server.' });
+    } 
+    finally {
+        client.close();
+    }
+};
+
+module.exports = { getAccount, createAccount, loginUser, updateAccount, deleteAccount };

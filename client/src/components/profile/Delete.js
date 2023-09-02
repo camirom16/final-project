@@ -1,21 +1,60 @@
 import { styled } from "styled-components";
 import Sidebar from "./SideBar";
 import { COLORS } from "../../styling/constants";
+import { useContext, useState } from "react";
+import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Delete = () => {
+    const { currentUser, logout } = useContext(UserContext);
+    const [accountDeleted, setAccountDeleted] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleDelete = () => {
+        fetch(`/account/${currentUser._id}`, {
+            method: "DELETE",
+            headers:{
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status >= 400) {
+                    alert(data.message);
+                }
+                else {
+                    setAccountDeleted(true);
+                    alert("Your account has been deleted.")
+                    logout();
+                    navigate('/');
+                }
+            })
+            .catch((error) => console.log(error.message));
+    }
+
     return (
         <Container>
             <Sidebar />
 
             <Content>
-                <h1>Are you sure you want to delete your account?</h1>
+                {accountDeleted ? (
+                    <h1> Your account has been deleted.</h1>
+                ) : (
+                    <>
+                        <h1>Are you sure you want to delete your account?</h1>
 
-                <div>
-                    <h2>We are sorry to see you go!</h2>
-                    <p>Remember, you can always create a new account again. </p>
-                </div>
+                        <div>
+                            <h2>We are sorry to see you go!</h2>
+                            <p>Remember, you can always create a new account again. </p>
+                        </div>
 
-                <button>Confirm, delete my account</button>
+                        <button onClick={handleDelete}>Confirm, delete my account</button>
+                    </>
+                )}
+                
             </Content>
         </Container>
     )

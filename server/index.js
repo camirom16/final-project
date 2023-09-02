@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 
-const { getAccount, createAccount, loginUser, updateAccount } = require('./handlers')
+const { getAccount, createAccount, loginUser, updateAccount, deleteAccount } = require('./handlers')
 
 const PORT = 8000;
 
@@ -20,6 +20,9 @@ app.post('/login', loginUser)
 
 //To update the user's medical information
 app.patch('/account/:accountId', updateAccount)
+
+//To delete the account
+app.delete('/account/:accountId', deleteAccount)
 
 app.listen(PORT, () => {
     console.log(`Server listening on port: ${PORT}`);
