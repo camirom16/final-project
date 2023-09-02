@@ -2,13 +2,19 @@ import { styled } from "styled-components";
 import logo from '../../assets/logo.png'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { FiUser as User } from "react-icons/fi";
 import { useContext } from "react";
 import { UserContext } from "../profile/UserContext";
+import { FiUser as User } from "react-icons/fi";
+import { FiLogOut as Logout } from "react-icons/fi";
 
 const Header = () => {
-    const { currentUser } = useContext(UserContext);
+    const { currentUser, logout } = useContext(UserContext);
     const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     return (
         <Container>
@@ -23,8 +29,8 @@ const Header = () => {
                 <div>
                     {currentUser ? (
                         <Buttons>
-                            <Button onClick={() => navigate(`/profile/${currentUser._id}`)}>
-                                <User size={26} /> Hello, {currentUser.name}!
+                            <Button onClick={handleLogout}>
+                                Logout <span><Logout size={28} /></span>
                             </Button>
                         </Buttons>
                     ) : (
@@ -80,7 +86,6 @@ const PageLink = styled(Link)`
 const Buttons = styled.div`
     display: flex;
     align-items: center;
-    cursor: pointer;
 `
 
 const Button = styled.button`
@@ -93,10 +98,15 @@ const Button = styled.button`
     padding: 20px 35px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-right: 30px;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
 
     &:hover {
         scale: 1.1;
+    }
+
+    & span {
+        margin-left: 10px;
     }
 `
 
