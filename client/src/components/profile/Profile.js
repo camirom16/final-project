@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
+
     //State to store the selected symptom
     const [selectedSymptom, setSelectedSymptom] = useState("");
     
@@ -18,7 +19,7 @@ const Profile = () => {
         } else if (!termsAccepted || !privacyAccepted) {
             alert("Please check both checkboxes to proceed.");
         } else {
-            window.location.href = `/health-info/${selectedSymptom}`;
+            // console.log(selectedSymptom);
         }
     };
 
@@ -44,7 +45,6 @@ const Profile = () => {
                             <option value="back-pain">Back pain</option>
                             <option value="bloating">Bloating</option>
                             <option value="conjunctivitis">Conjunctivitis</option>
-                            <option value="fever">Fever</option>
                             <option value="flu">Flu</option>
                         </select>
                     </div>
@@ -68,7 +68,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                    <Link to="#">
+                    <Link to={`/symptom/${selectedSymptom}`}>
                         <button onClick={handleStartClick}>Start</button>
                     </Link>
                     </div>

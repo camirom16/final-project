@@ -12,6 +12,7 @@ import Profile from "./components/profile/Profile";
 import UpdateAccount from "./components/profile/UpdateAccount";
 import Delete from "./components/profile/Delete";
 import NHSWidget from "./components/home/Ressources";
+import Symptom from "./components/consultation/Symptom";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
             <Route path='/profile/:profileId' element={<Profile />} />
             <Route path='/profile/:profileId/settings' element={<UpdateAccount />} />
             <Route path='/profile/:profileId/delete' element={<Delete />} />
+            <Route path="/symptom/:symptom" element={<Symptom />} />
             <Route path='*' element={<Error />} />
             
           </Routes>
