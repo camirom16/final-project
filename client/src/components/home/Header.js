@@ -6,6 +6,8 @@ import { useContext } from "react";
 import { UserContext } from "../profile/UserContext";
 import { FiUser as User } from "react-icons/fi";
 import { FiLogOut as Logout } from "react-icons/fi";
+import { FaHouseUser as UserHome } from "react-icons/fa";
+
 
 const Header = () => {
     const { currentUser, logout } = useContext(UserContext);
@@ -29,6 +31,7 @@ const Header = () => {
                 <div>
                     {currentUser ? (
                         <Buttons>
+                            <UserHome size={32} onClick={() => navigate(`/profile/${currentUser._id}`)} />
                             <Button onClick={handleLogout}>
                                 Logout <span><Logout size={28} /></span>
                             </Button>

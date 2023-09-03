@@ -6,8 +6,21 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
-    const [selectedSymptom, setSelectedSymptom] = useState("");
     //State to store the selected symptom
+    const [selectedSymptom, setSelectedSymptom] = useState("");
+    
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [privacyAccepted, setPrivacyAccepted] = useState(false);
+
+    const handleStartClick = () => {
+        if (!selectedSymptom) {
+            alert("Please select your main symptom.");
+        } else if (!termsAccepted || !privacyAccepted) {
+            alert("Please check both checkboxes to proceed.");
+        } else {
+            window.location.href = `/health-info/${selectedSymptom}`;
+        }
+    };
 
     return (
 
@@ -30,6 +43,9 @@ const Profile = () => {
                             <option>Please select your main symptom</option>
                             <option value="back-pain">Back pain</option>
                             <option value="bloating">Bloating</option>
+                            <option value="conjunctivitis">Conjunctivitis</option>
+                            <option value="fever">Fever</option>
+                            <option value="flu">Flu</option>
                         </select>
                     </div>
 
@@ -44,17 +60,17 @@ const Profile = () => {
 
                     <div>
                         <div>
-                            <input type='checkbox' /><label>I read and accept Term of Service</label>
+                            <input type='checkbox' checked={termsAccepted} onChange={() => setTermsAccepted(!termsAccepted)} /><label>I read and accept Term of Service</label>
                         </div>
                         <div>
-                            <input type='checkbox' /><label>I agree for my health information to be used for the interview. More information in the Privacy Policy.</label>
+                            <input type='checkbox' checked={privacyAccepted} onChange={() => setPrivacyAccepted(!privacyAccepted)} /><label>I agree for my health information to be used for the interview. More information in the Privacy Policy.</label>
                         </div>
                     </div>
 
                     <div>
-                        <Link to={selectedSymptom ? `/health-info/${selectedSymptom}` : "#"}>
-                            <button>Start</button>
-                        </Link>
+                    <Link to="#">
+                        <button onClick={handleStartClick}>Start</button>
+                    </Link>
                     </div>
                 </ProfileStart>
 

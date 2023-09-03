@@ -11,6 +11,7 @@ import ConfirmationAccount from "./components/account/ConfirmationAccount";
 import Profile from "./components/profile/Profile";
 import UpdateAccount from "./components/profile/UpdateAccount";
 import Delete from "./components/profile/Delete";
+import NHSWidget from "./components/home/Ressources";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <div className="App-content">
           <Routes>
             <Route path='/' element={<HomePage />} />
+            <Route path='/ressources' element={<NHSWidget />} />
             <Route path='/new-account' element={<NewAccount />} />
             <Route path='/account/:accountId' element={<ConfirmationAccount />} />
             <Route path='/login' element={<Login />} />
