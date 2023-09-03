@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 
-const { getAccount, createAccount, loginUser, updateAccount, deleteAccount } = require('./handlers')
+const { getAccount, createAccount, loginUser, updateAccount, deleteAccount, getSymptomInfo } = require('./handlers')
 
 const PORT = 8000;
 
@@ -23,6 +23,10 @@ app.patch('/account/:accountId', updateAccount)
 
 //To delete the account
 app.delete('/account/:accountId', deleteAccount)
+
+//NHS API
+app.get('/symptom/:symptom', getSymptomInfo);
+
 
 app.listen(PORT, () => {
     console.log(`Server listening on port: ${PORT}`);

@@ -1,10 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require('bcrypt');
+const axios = require('axios');
 
 //MongoDb Setup
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
-const { MONGO_URI } = process.env;
+const { MONGO_URI, API_KEY } = process.env;
 
 const options = {
     useNewUrlParser: true,
@@ -222,4 +223,32 @@ const deleteAccount = async (req, res) => {
     }
 };
 
-module.exports = { getAccount, createAccount, loginUser, updateAccount, deleteAccount };
+//TO FETCH SYMPTOM INFORMATION FROM NHS API
+const fetchSymptomInfo = async (symptom) => {
+    const url = `https://api.nhs.uk/conditions/${symptom}`;
+    const headers = {
+        'subscription-key': API_KEY,
+    };
+
+    try {
+        const response = await axios.get(url, { headers });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching symptom information from NHS API:', error);
+        throw error;
+    }
+};
+
+// Handler to get symptom information
+const getSymptomInfo = async (req, res) => {
+    const { symptom } = req.params;
+
+    try {
+        const symptomInfo = await fetchSymptomInfo(symptom);
+        res.status(200).json({ status: 200, data: symptomInfo });
+    } catch (error) {
+        res.status(500).json({ status: 500, message: 'Error fetching symptom information' });
+    }
+};
+
+module.exports = { getAccount, createAccount, loginUser, updateAccount, deleteAccount, getSymptomInfo };
