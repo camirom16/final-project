@@ -1,12 +1,11 @@
-import { styled } from "styled-components";
-import Sidebar from "./SideBar";
-import start from "../../assets/profile-start.png"
-import { COLORS } from "../../styling/constants";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { COLORS } from "../../styling/constants";
+import { styled } from "styled-components";
+import Sidebar from "./SideBar";
+import start from "../../assets/profile-start.png";
 
 const Profile = () => {
-
     //State to store the selected symptom
     const [selectedSymptom, setSelectedSymptom] = useState("");
     
@@ -18,13 +17,10 @@ const Profile = () => {
             alert("Please select your main symptom.");
         } else if (!termsAccepted || !privacyAccepted) {
             alert("Please check both checkboxes to proceed.");
-        } else {
-            // console.log(selectedSymptom);
         }
     };
 
     return (
-
         <Container>
             <Sidebar />
 
@@ -45,7 +41,8 @@ const Profile = () => {
                             <option value="back-pain">Back pain</option>
                             <option value="bloating">Bloating</option>
                             <option value="conjunctivitis">Conjunctivitis</option>
-                            <option value="flu">Flu</option>
+                            <option value="headaches">Headeache</option>
+                            <option value="feeling-sick-nausea">Nausea</option>
                         </select>
                     </div>
 
@@ -78,7 +75,6 @@ const Profile = () => {
                     <Img src={start} alt='consultation' />
                 </div>
             </Content>
-            
         </Container>
     );
 };
@@ -94,16 +90,17 @@ const ProfileStart = styled.div`
         margin-left: 80%;
         background-color: ${COLORS.greenlink};
     }
-`
+`;
+
 const Img = styled.img`
     width: 22vw;
-`
+`;
 
 const Container = styled.div`
     width: 100vw;
     display: flex;
     gap: 40px;
-`
+`;
 
 const Content = styled.div`
     display: flex;
@@ -112,6 +109,6 @@ const Content = styled.div`
     margin-bottom: 20px;
     width: 80vw;
     gap: 10%;
-`
+`;
 
 export default Profile;

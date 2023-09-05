@@ -1,9 +1,9 @@
-import { styled } from "styled-components";
-import Sidebar from "./SideBar";
-import { COLORS } from "../../styling/constants";
 import { useContext, useState } from "react";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
+import Sidebar from "./SideBar";
+import { COLORS } from "../../styling/constants";
 
 const Delete = () => {
     const { currentUser, logout } = useContext(UserContext);
@@ -63,7 +63,7 @@ const Delete = () => {
 const Container = styled.div`
     display: flex;
     gap: 40px;
-`
+`;
 
 const Content = styled.div`
     width: 30vw;
@@ -78,6 +78,6 @@ const Content = styled.div`
     & h1 {
         color: ${COLORS.buttons}
     }
-`
+`;
 
 export default Delete;

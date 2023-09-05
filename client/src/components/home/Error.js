@@ -28,14 +28,14 @@ const Container = styled.div`
     align-items: center;
     gap: 25px;
 
-    & img {
-        width: 25vw;
-    }
-
     & span {
         color: #432974;
         text-decoration: underline;
         cursor: pointer;
+    }
+
+    & img {
+        width: 25vw;
     }
 `;
 

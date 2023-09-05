@@ -4,6 +4,7 @@ import { COLORS } from "../../styling/constants";
 const NHSWidget = () => {
     return (
         <Container>
+            {/* Widget from NHS API */}
             <iframe className="widget"
             title="NHS.UK Live Well widget"
             src="https://developer.api.nhs.uk/widgets/live-well?uid=94593ef0-42d8-11ee-a14e-c36592fce2f6"
@@ -27,6 +28,6 @@ const Container = styled.div`
         padding: 2%;
         margin-top: 2%;
     }
-`
+`;
 
 export default NHSWidget;

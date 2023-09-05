@@ -1,13 +1,12 @@
-import { styled } from "styled-components";
-import logo from '../../assets/logo.png'
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../profile/UserContext";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { styled } from "styled-components";
+import logo from '../../assets/logo.png'
 import { FiUser as User } from "react-icons/fi";
 import { FiLogOut as Logout } from "react-icons/fi";
 import { FaHouseUser as UserHome } from "react-icons/fa";
-
 
 const Header = () => {
     const { currentUser, logout } = useContext(UserContext);
@@ -23,7 +22,6 @@ const Header = () => {
             <NavBar>
                 <Pages>
                     <Img src={logo} alt='logo' onClick={() => navigate("/")}/>
-                    <PageLink to="/about">About</PageLink>
                     <PageLink to="/how-it-works">How it works?</PageLink>
                     <PageLink to="/ressources">Ressources</PageLink>
                 </Pages>
@@ -51,7 +49,7 @@ const Header = () => {
 
 const Container = styled.div`
     background-color: #F2BE5C;
-`
+`;
 
 const NavBar = styled.div`
     height: 10vh;
@@ -66,7 +64,7 @@ const NavBar = styled.div`
     font-weight: bold;
     font-size: 1vw;
     font-weight: bolder;
-`
+`;
 
 const Pages = styled.div`
     width: 70%;
@@ -75,21 +73,21 @@ const Pages = styled.div`
     align-items: center;
     gap: 30px;
     cursor: pointer;
-`
+`;
 
 const Img = styled.img`
     width: 15%;
-`
+`;
 
 const PageLink = styled(Link)`
     text-decoration: none;
     color: #244334;
-`
+`;
 
 const Buttons = styled.div`
     display: flex;
     align-items: center;
-`
+`;
 
 const Button = styled.button`
     font-size: 1vw;
@@ -111,6 +109,6 @@ const Button = styled.button`
     & span {
         margin-left: 10px;
     }
-`
+`;
 
 export default Header;

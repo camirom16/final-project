@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { COLORS } from "../../styling/constants";
-import { useEffect, useState } from "react";
 
 const ConfirmationAccount = () => {
     const { accountId } = useParams();
@@ -50,7 +50,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 
 const WelcomeBox = styled.div`
     height: 25vh;
@@ -64,11 +64,11 @@ const WelcomeBox = styled.div`
     padding: 30px;
     font-size: 1vw;
     text-align: center;
-`
+`;
 
 const Button = styled.button`
     font-size: 1vw;
     margin: 0;
-`
+`;
 
 export default ConfirmationAccount;

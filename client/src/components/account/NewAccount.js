@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { COLORS } from "../../styling/constants";
 
@@ -268,14 +268,14 @@ const NewAccount = () => {
 
                 </div>   
 
-                <div>
+                <Create>
                     <button type="submit">Create account</button>
                     <p> By signin up, you agree to InfoHealth's  
                         <LoginLink to=''> Term of use </LoginLink>
                         and
                         <LoginLink to=''> Privacy policy.</LoginLink>
                     </p>
-                </div>
+                </Create>
             </form>
         </Container >
     )
@@ -313,6 +313,12 @@ const Question = styled.div`
 const LoginLink = styled(Link)`
     text-decoration: none;
     color: ${COLORS.links};
+`;
+
+const Create = styled.div`
+    & p {
+        font-size: 18px;
+    }
 `;
 
 export default NewAccount;

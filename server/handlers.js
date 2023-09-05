@@ -239,12 +239,52 @@ const fetchSymptomInfo = async (symptom) => {
     }
 };
 
+const processSymptomInformation = async (symptom) => {
+    const symptomInfo = await fetchSymptomInfo(symptom)
+
+    // Initialize an array to store the relevant parts
+    const relevantParts = [];
+
+    // Recursively traverse the symptomInfo object and look for relevant headlines
+    const findRelevantParts = (part) => {
+        if (
+            part.headline === "Do" ||
+            part.headline === "Don't" ||
+            part.identifier === "primary" ||
+            part.identifier === "urgent" ||
+            part.identifier === "immediate"
+        ) {
+            relevantParts.push({
+                identifier: part.identifier,
+                headline: part.headline,
+                text: part.text,
+            });
+        }
+
+        // Check if the part has more nested parts and recursively search them
+        if (part.hasPart && Array.isArray(part.hasPart)) {
+            for (const subPart of part.hasPart) {
+                findRelevantParts(subPart);
+            }
+        }
+    };
+
+    // Start the recursive search from the root
+    findRelevantParts(symptomInfo);
+
+    // Return an object containing the symptom name and relevant parts
+    return {
+        name: symptomInfo.name,
+        relevantParts: relevantParts,
+    };
+};
+
 // Handler to get symptom information
 const getSymptomInfo = async (req, res) => {
     const { symptom } = req.params;
 
     try {
-        const symptomInfo = await fetchSymptomInfo(symptom);
+        const symptomInfo = await processSymptomInformation(symptom);
         res.status(200).json({ status: 200, data: symptomInfo });
     } catch (error) {
         res.status(500).json({ status: 500, message: 'Error fetching symptom information' });

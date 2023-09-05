@@ -42,19 +42,20 @@ const Container = styled.div`
     width: 16vw;
     background-color: ${COLORS.secondary};
     text-align: center;
-`
+`;
+
 const Button = styled.button`
     font-size: 1vw;
     background-color: transparent;
     padding: 20px 35px;
     margin-right: 30px;
     text-align: center;
-`
+`;
 
 const Buttons = styled.div`
     display: flex;
     flex-direction: column;
-`
+`;
 
 const ProfileButtons = styled.div`
     display: flex;
@@ -65,13 +66,13 @@ const ProfileButtons = styled.div`
         text-align: left;
         text-transform: uppercase;
     }
-`
+`;
 
 const Delete = styled.button`
     background-color: transparent;
     color: ${COLORS.links};
     display: flex;
     align-items: center;
-`
+`;
 
 export default Sidebar;

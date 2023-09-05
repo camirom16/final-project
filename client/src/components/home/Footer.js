@@ -10,32 +10,31 @@ import { FiPhone as Phone } from "react-icons/fi";
 
 const Footer = () => {
     return (
+        <Container>
+            <Up>
+                <div>
+                    <LogoImg src={logo} alt='logo' />
+                    <p><Mail /> info.health@email.com</p>
+                    <p><Phone /> 1800-INFO-HEALTH</p>
+                    <Icons>
+                        <Fb size={32} /> 
+                        <Insta size={32} /> 
+                        <Git size={32} />
+                    </Icons>
+                </div>
 
-            <Container>
-                <Up>
-                    <div>
-                        <LogoImg src={logo} alt='logo' />
-                        <p><Mail /> info.health@email.com</p>
-                        <p><Phone /> 1800-INFO-HEALTH</p>
-                        <Icons>
-                                <Fb size={32} /> 
-                                <Insta size={32} /> 
-                                <Git size={32} />
-                        </Icons>
-                    </div>
+                <NhsContainer>
+                    <p>This website is powed by:</p>
+                    <NhsImg src={nhs} alt='logo' />
+                </NhsContainer>
+            </Up>
 
-                    <NhsContainer>
-                        <p>This website is powed by:</p>
-                        <NhsImg src={nhs} alt='logo' />
-                    </NhsContainer>
-                </Up>
-
-                <Down>
-                    <p> Terms and coditions</p>
-                    <p>Privacy policy</p>
-                </Down>
+            <Down>
+                <p> Terms and coditions</p>
+                <p>Privacy policy</p>
+            </Down>
                 
-            </Container>
+        </Container>
     )
 };
 
@@ -49,7 +48,7 @@ const Container = styled.div`
     padding: 20px 40px 30px 40px;
     font-size: 0.8vw;
     font-weight: bold;
-`
+`;
 
 const Up = styled.div`
     display: flex;
@@ -58,17 +57,17 @@ const Up = styled.div`
     & p {
         padding: 2px 0;
     }
-`
+`;
 
 const LogoImg = styled.img`
     width: 75%;
-`
+`;
 
 const Icons = styled.div`
     display: flex;
     padding: 20px ;
     gap: 20px;
-`
+`;
 
 const NhsContainer = styled.div`
     text-align: right;
@@ -76,16 +75,16 @@ const NhsContainer = styled.div`
     & p {
         padding-right: 80px;
     }
-`
+`;
 
 const NhsImg = styled.img`
     width: 50%;
-`
+`;
 
 const Down = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-`
+`;
 
 export default Footer;

@@ -13,6 +13,8 @@ import UpdateAccount from "./components/profile/UpdateAccount";
 import Delete from "./components/profile/Delete";
 import NHSWidget from "./components/home/Ressources";
 import Symptom from "./components/consultation/Symptom";
+import SymptomTreatement from "./components/consultation/SymptomTreatement";
+import HowWorks from "./components/home/HowWorks";
 
 const App = () => {
   return (
@@ -24,6 +26,7 @@ const App = () => {
         <div className="App-content">
           <Routes>
             <Route path='/' element={<HomePage />} />
+            <Route path='/how-it-works' element={<HowWorks />} />
             <Route path='/ressources' element={<NHSWidget />} />
             <Route path='/new-account' element={<NewAccount />} />
             <Route path='/account/:accountId' element={<ConfirmationAccount />} />
@@ -32,6 +35,7 @@ const App = () => {
             <Route path='/profile/:profileId/settings' element={<UpdateAccount />} />
             <Route path='/profile/:profileId/delete' element={<Delete />} />
             <Route path="/symptom/:symptom" element={<Symptom />} />
+            <Route path="/symptom-treatment/:symptom" element={<SymptomTreatement />} />
             <Route path='*' element={<Error />} />
             
           </Routes>

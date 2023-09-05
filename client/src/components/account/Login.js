@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../profile/UserContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { UserContext } from "../profile/UserContext";
 
 const Login = () => {
     const { currentUser, setCurrentUser } = useContext(UserContext)
@@ -52,7 +52,6 @@ const Login = () => {
                     <label htmlFor='password'>Password</label>
                     <Input type='password' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </Info>
-
 
                 <div>
                     {/* Enters to the user's profile */}

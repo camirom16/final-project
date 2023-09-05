@@ -1,12 +1,11 @@
-import { styled } from "styled-components";
-import Sidebar from "./SideBar";
 import { useContext, useState } from "react";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
+import Sidebar from "./SideBar";
 
 const UpdateAccount = () => {
     const { currentUser } = useContext(UserContext);
-
     const navigate = useNavigate();
 
     // Initialize the formData with the current user's data
