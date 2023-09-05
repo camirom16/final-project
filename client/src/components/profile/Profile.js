@@ -1,22 +1,42 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../styling/constants";
 import { styled } from "styled-components";
 import Sidebar from "./SideBar";
 import start from "../../assets/profile-start.png";
 
 const Profile = () => {
+    const navigate = useNavigate();
+
     //State to store the selected symptom
     const [selectedSymptom, setSelectedSymptom] = useState("");
-    
+
+    //State for the terms and provacy that the user needs to agree before consultation
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [privacyAccepted, setPrivacyAccepted] = useState(false);
+
+    // State to control whether to navigate or not
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
+    useEffect(() => {
+        // Check if both checkboxes are checked and a symptom is selected
+        if (selectedSymptom && termsAccepted && privacyAccepted) {
+            setShouldNavigate(true);
+        } else {
+            setShouldNavigate(false);
+        }
+    }, [selectedSymptom, termsAccepted, privacyAccepted]);
 
     const handleStartClick = () => {
         if (!selectedSymptom) {
             alert("Please select your main symptom.");
         } else if (!termsAccepted || !privacyAccepted) {
             alert("Please check both checkboxes to proceed.");
+        } else {
+            // Only navigate to the next page if shouldNavigate is true
+            if (shouldNavigate) {
+                navigate(`/symptom/${selectedSymptom}`);
+            }
         }
     };
 
@@ -65,9 +85,9 @@ const Profile = () => {
                     </div>
 
                     <div>
-                    <Link to={`/symptom/${selectedSymptom}`}>
+                    
                         <button onClick={handleStartClick}>Start</button>
-                    </Link>
+                    
                     </div>
                 </ProfileStart>
 
