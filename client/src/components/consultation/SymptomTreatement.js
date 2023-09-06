@@ -38,8 +38,13 @@ const SymptomTreatement = () => {
             <Sidebar />
             {symptomInfo ? (
                 <Content>
-                    <h1>{symptomInfo.name}</h1>
-                    <h2>If you don't have any symptoms to go to the E.R or to go to see your doctor immediatly, you can do this at home:</h2>
+                    <Title>
+                        <h1>{symptomInfo.name}</h1>
+                        <h2>You can treat yourself at home. Here are our recommandations:</h2>
+                        <p>Remember, this is not a diagnosis. If your health is not getting better in 24h-48h plase, 
+                            take an appointement with your doctor or NP.
+                        </p>
+                    </Title>
 
                     <Treatement>
                         <Do>
@@ -55,7 +60,6 @@ const SymptomTreatement = () => {
 
                     <Final>
                         <button onClick={handleContinue}>BACK HOME</button>
-                        <p>Remember, this is not a diagnosis. If your health is not getting better take an appointement with you health care provider.</p>
                     </Final>
                     
                 </Content>
@@ -76,14 +80,16 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`
 
+const Title = styled.div`
+    text-align: center;
     & h1 {
         margin-top: 2%;
     }
 
-    & h2 {
+    & p {
         margin-bottom: 2%;
-        text-align: center;
     }
 `;
 

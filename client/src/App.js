@@ -12,9 +12,12 @@ import Profile from "./components/profile/Profile";
 import UpdateAccount from "./components/profile/UpdateAccount";
 import Delete from "./components/profile/Delete";
 import NHSWidget from "./components/home/Ressources";
-import Symptom from "./components/consultation/Symptom";
 import SymptomTreatement from "./components/consultation/SymptomTreatement";
 import HowWorks from "./components/home/HowWorks";
+import SymptomEmergency from "./components/consultation/SymptomEmergency";
+import ER from "./components/consultation/ER";
+import SymptomPrimary from "./components/consultation/SymptomPrimary";
+import Appointement from "./components/consultation/Appointment";
 
 const App = () => {
   return (
@@ -34,7 +37,10 @@ const App = () => {
             <Route path='/profile/:profileId' element={<Profile />} />
             <Route path='/profile/:profileId/settings' element={<UpdateAccount />} />
             <Route path='/profile/:profileId/delete' element={<Delete />} />
-            <Route path="/symptom/:symptom" element={<Symptom />} />
+            <Route path="/symptom/:symptom" element={<SymptomEmergency />} />
+            <Route path="/emergency" element={<ER />} />
+            <Route path="/symptom-primarycare/:symptom" element={<SymptomPrimary />} />
+            <Route path="/appointement" element={<Appointement />} />
             <Route path="/symptom-treatment/:symptom" element={<SymptomTreatement />} />
             <Route path='*' element={<Error />} />
             
